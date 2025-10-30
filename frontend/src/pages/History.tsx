@@ -22,6 +22,8 @@ interface WordLog {
   date: string;
   count: number;
   note?: string;
+  startTime?: string;
+  endTime?: string;
 }
 
 interface MergedRecord {
@@ -36,10 +38,12 @@ interface MergedRecord {
   note?: string;
   startTime?: Date; // 学习开始时间
   endTime?: Date;   // 学习结束时间
+  seconds?: number;
+  remainingSeconds?: number;
 }
 
 export const History: React.FC = () => {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [, setSubjects] = useState<Subject[]>([]);
   const [records, setRecords] = useState<MergedRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [globalTheme, setGlobalTheme] = useState<string>('default');

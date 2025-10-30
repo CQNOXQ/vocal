@@ -46,7 +46,6 @@ export const FlipClock: React.FC<{ theme?: string }> = ({ theme = 'classic' }) =
   const [time, setTime] = useState(new Date());
   const clockRef = useRef<HTMLDivElement>(null);
   const flipObjsRef = useRef<Flipper[]>([]);
-  const clockStyleRef = useRef<HTMLDivElement>(null);
   
   const currentTheme = FLIP_CLOCK_THEMES[theme] || FLIP_CLOCK_THEMES.classic;
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { api } from "../lib/api";
 import { useAuthStore } from "../stores/auth";
 import { FlipClock } from "../components/FlipClock";
@@ -24,7 +23,6 @@ export const Dashboard: React.FC = () => {
   const accessToken = useAuthStore((s) => s.accessToken);
   const [todayMinutes, setTodayMinutes] = useState(0);
   const [todayWords, setTodayWords] = useState(0);
-  const [dailyData, setDailyData] = useState<DailyData[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
@@ -174,9 +172,8 @@ export const Dashboard: React.FC = () => {
   const loadData = async () => {
     try {
       const today = new Date().toISOString().split("T")[0];
-      const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
 
-      const [dayRes, analyticsRes, subjectsRes, studySessionsRes] = await Promise.all([
+      const [dayRes, , subjectsRes, studySessionsRes] = await Promise.all([
         api.get(`/study-sessions/days/${today}`),
         api.get("/analytics/daily", { params: { range: "30d" } }),
         api.get("/subjects"),
@@ -184,7 +181,6 @@ export const Dashboard: React.FC = () => {
       ]);
 
       setTodayMinutes(dayRes.data.totalMinutes || 0);
-      setDailyData(analyticsRes.data || []);
 
       // 计算每个科目今日的学习时长和单词数量
       const sessionsBySubject: Record<number, number> = {};
