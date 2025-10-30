@@ -1,0 +1,210 @@
+/* 翻牌外框 */
+.flip {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 100px;
+  line-height: 100px;
+  border: solid 1px var(--border-color, #000);
+  border-radius: 10px;
+  background: var(--card-bg, #000);
+  font-size: 66px;
+  color: var(--text-color, #fff);
+  box-shadow: var(--shadow, 0 0 6px rgba(0, 0, 0, 0.5));
+  text-align: center;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* 纸牌的基本样式 */
+.flip .digital:before,
+.flip .digital:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--card-bg, #000);
+  overflow: hidden;
+  box-sizing: border-box;
+  color: var(--text-color, #fff);
+}
+
+.flip .digital:before {
+  top: 0;
+  bottom: 50%;
+  border-radius: 10px 10px 0 0;
+  border-bottom: solid 1px #666;
+}
+
+.flip .digital:after {
+  top: 50%;
+  bottom: 0;
+  border-radius: 0 0 10px 10px;
+  line-height: 0;
+}
+
+/* 数字样式 */
+.flip .number0:before,
+.flip .number0:after {
+  content: "0";
+}
+
+.flip .number1:before,
+.flip .number1:after {
+  content: "1";
+}
+
+.flip .number2:before,
+.flip .number2:after {
+  content: "2";
+}
+
+.flip .number3:before,
+.flip .number3:after {
+  content: "3";
+}
+
+.flip .number4:before,
+.flip .number4:after {
+  content: "4";
+}
+
+.flip .number5:before,
+.flip .number5:after {
+  content: "5";
+}
+
+.flip .number6:before,
+.flip .number6:after {
+  content: "6";
+}
+
+.flip .number7:before,
+.flip .number7:after {
+  content: "7";
+}
+
+.flip .number8:before,
+.flip .number8:after {
+  content: "8";
+}
+
+.flip .number9:before,
+.flip .number9:after {
+  content: "9";
+}
+
+/* 向下翻的层级关系 */
+.flip.down .front:before {
+  z-index: 3;
+}
+
+.flip.down .back:after {
+  z-index: 2;
+  transform-origin: 50% 0%;
+  transform: perspective(160px) rotateX(180deg);
+}
+
+.flip.down .front:after,
+.flip.down .back:before {
+  z-index: 1;
+}
+
+/* 向上翻的层级关系 */
+.flip.up .front:after {
+  z-index: 3;
+}
+
+.flip.up .back:before {
+  z-index: 2;
+  transform-origin: 50% 100%;
+  transform: perspective(160px) rotateX(-180deg);
+}
+
+.flip.up .front:before,
+.flip.up .back:after {
+  z-index: 1;
+}
+
+/* 向下翻动画 */
+.flip.down.go .front:before {
+  transform-origin: 50% 100%;
+  animation: frontFlipDown 0.6s ease-in-out both;
+  box-shadow: 0 -2px 6px rgba(255, 255, 255, 0.3);
+  backface-visibility: hidden;
+}
+
+.flip.down.go .back:after {
+  animation: backFlipDown 0.6s ease-in-out both;
+}
+
+@keyframes frontFlipDown {
+  0% {
+    transform: perspective(160px) rotateX(0deg);
+  }
+  100% {
+    transform: perspective(160px) rotateX(-180deg);
+  }
+}
+
+@keyframes backFlipDown {
+  0% {
+    transform: perspective(160px) rotateX(180deg);
+  }
+  100% {
+    transform: perspective(160px) rotateX(0deg);
+  }
+}
+
+/* 向上翻动画 */
+.flip.up.go .front:after {
+  transform-origin: 50% 0%;
+  animation: frontFlipUp 0.6s ease-in-out both;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.3);
+  backface-visibility: hidden;
+}
+
+.flip.up.go .back:before {
+  animation: backFlipUp 0.6s ease-in-out both;
+}
+
+@keyframes frontFlipUp {
+  0% {
+    transform: perspective(160px) rotateX(0deg);
+  }
+  100% {
+    transform: perspective(160px) rotateX(180deg);
+  }
+}
+
+@keyframes backFlipUp {
+  0% {
+    transform: perspective(160px) rotateX(-180deg);
+  }
+  100% {
+    transform: perspective(160px) rotateX(0deg);
+  }
+}
+
+/* 时钟容器 */
+.clock {
+  text-align: center;
+}
+
+.clock .colon {
+  display: inline-block;
+  line-height: 102px;
+  font-size: 66px;
+  font-style: normal;
+  vertical-align: top;
+  color: var(--text-color, rgba(255, 255, 255, 0.9));
+  opacity: 0.9;
+}
+
+/* 圆润字体样式 */
+.rounded-font {
+  font-family: "Comic Sans MS", "方正喵呜体", "华文圆体", "苹方-简 圆体", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+

@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: studytracker-mysql
+    environment:
+      MYSQL_DATABASE: studytracker
+      MYSQL_USER: studytracker_user
+      MYSQL_PASSWORD: ${DB_PASS:-changeme}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - studytracker-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: studytracker-backend
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/studytracker?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+      DB_USER: studytracker_user
+      DB_PASS: ${DB_PASS:-changeme}
+      JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_at_least_32_characters_long_random_string}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - studytracker-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: studytracker-frontend
+    environment:
+      VITE_API_BASE: ${VITE_API_BASE:-http://localhost:8080}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - studytracker-network
+
+volumes:
+  mysql_data:
+
+networks:
+  studytracker-network:
+    driver: bridge
+
