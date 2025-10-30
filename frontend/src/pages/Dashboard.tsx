@@ -3,12 +3,6 @@ import { api } from "../lib/api";
 import { useAuthStore } from "../stores/auth";
 import { FlipClock } from "../components/FlipClock";
 
-interface DailyData {
-  date: string;
-  minutes: number;
-  words: number;
-}
-
 interface Subject {
   id: number;
   name: string;
