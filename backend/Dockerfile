@@ -1,5 +1,5 @@
 # 构建阶段
-FROM openjdk:21-jdk AS builder
+FROM eclipse-temurin:21-jdk AS builder
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
 # 运行阶段
-FROM openjdk:21-jre-slim
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
